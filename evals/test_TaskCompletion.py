@@ -8,6 +8,7 @@ from deepeval.metrics import TaskCompletionMetric
 from deepeval.test_case import LLMTestCase
 
 from agent_instrumented import support_agent
+from llm_models import LLMModel
 
 actual_output = support_agent("Where is my order ORD-1042?")
 
@@ -17,4 +18,4 @@ test_case = LLMTestCase(
 )
 
 evaluate(test_cases = [test_case],
-         metrics= [TaskCompletionMetric(threshold=0.7,model = "gpt-oss")])
+         metrics= [TaskCompletionMetric(threshold=0.7,model = LLMModel.GPT_OSS)])

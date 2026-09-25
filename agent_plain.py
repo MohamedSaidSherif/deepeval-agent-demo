@@ -19,6 +19,7 @@ from langchain_ollama import ChatOllama
 load_dotenv()
 from langchain_core.tools import tool
 from langchain.agents import create_agent
+from llm_models import LLMModel
 
 
 # ---------------------------------------------------------------------------
@@ -61,8 +62,8 @@ def get_refund_policy(category: str) -> str:
 # ---------------------------------------------------------------------------
 # The agent — a LangGraph ReAct agent powered by Claude.
 # ---------------------------------------------------------------------------
-# llm = ChatAnthropic(model="claude-sonnet-4-6", temperature=0)
-llm = ChatOllama(model="gpt-oss")
+# llm = ChatAnthropic(model=LLMModel.CLAUDE_SONNET_4_6, temperature=0)
+llm = ChatOllama(model=LLMModel.GPT_OSS)
 
 agent = create_agent(
     model=llm,

@@ -7,20 +7,21 @@ from deepeval.dataset import EvaluationDataset, Golden
 from deepeval.metrics import PromptAlignmentMetric, StepEfficiencyMetric, AnswerRelevancyMetric
 from deepeval.tracing import observe, update_current_trace
 from agent_instrumented import support_agent as _support_agent
+from llm_models import LLMModel
 
 
 @observe(name="support_agent")
 def support_agent(user_input: str) -> str:
     return _support_agent( user_input )
 
-answer_relevancy = AnswerRelevancyMetric(threshold = 0.7, model = "gpt-4o")
-step_efficiency = StepEfficiencyMetric(threshold=0.5,model = "gpt-4o")
+answer_relevancy = AnswerRelevancyMetric(threshold = 0.7, model = LLMModel.GPT_4O)
+step_efficiency = StepEfficiencyMetric(threshold=0.5,model = LLMModel.GPT_4O)
 
 prompt_alignment = PromptAlignmentMetric(
     prompt_instructions=[
         "You are a friendly customer-support agent. "
         "Keep replies short and helpful."
-    ], threshold= 0.7, model = "gpt-4o"
+    ], threshold= 0.7, model = LLMModel.GPT_4O
 )
 
 

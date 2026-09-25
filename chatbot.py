@@ -32,6 +32,7 @@ load_dotenv()
 
 import json
 from openai import OpenAI
+from llm_models import LLMModel
 
 client = OpenAI()
 
@@ -149,7 +150,7 @@ def chat(
 
     while True:
         response = client.chat.completions.create(
-            model="gpt-4o",
+            model=LLMModel.GPT_4O,
             messages=[{"role": "system", "content": SYSTEM_PROMPT}] + history,
             tools=TOOLS,
             tool_choice="auto",

@@ -10,6 +10,7 @@ from deepeval.synthesizer.synthesizer import Synthesizer
 from deepeval.tracing import observe
 
 from agent_instrumented import support_agent as _support_agent
+from llm_models import LLMModel
 
 
 @observe(name="support_agent")
@@ -17,7 +18,7 @@ def support_agent(user_input: str) -> str:
     return _support_agent( user_input )
 
 
-synthesizer =Synthesizer(model="gpt-4o")
+synthesizer =Synthesizer(model=LLMModel.GPT_4O)
 
 goldens = synthesizer.generate_goldens_from_docs(
     document_paths=[os.path.join(os.path.dirname(os.path.dirname( os.path.abspath( __file__ ) ) ),"policies.txt")],

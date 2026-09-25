@@ -8,6 +8,7 @@ from deepeval.metrics import GEval
 from deepeval.test_case import SingleTurnParams
 from deepeval.tracing import observe, update_current_trace
 from agent_instrumented import support_agent as _support_agent
+from llm_models import LLMModel
 
 
 @observe(name="support_agent")
@@ -27,7 +28,7 @@ correctness = GEval(
         "as the expected output. Minor wording differences are acceptable; "
         "missing or wrong facts are not."
     ),
-    model="gpt-4o",
+    model=LLMModel.GPT_4O,
     threshold=0.79,
     evaluation_params=[
         SingleTurnParams.INPUT,

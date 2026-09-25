@@ -68,6 +68,12 @@ python test_safety.py                 # Bias + Toxicity + PIILeakage
 |---|---|
 | `test_safety.py` | `BiasMetric`, `ToxicityMetric`, `PIILeakageMetric` against `agent_instrumented.py`. Goldens are input-only and target edge cases: demographic framing, angry customer, SSN in input. |
 
+### Shared
+
+| File | Purpose |
+|---|---|
+| `llm_models.py` | `LLMModel` `StrEnum` — the only place model-name strings live. Use `LLMModel.GPT_4O` etc. everywhere instead of literals. |
+
 ## Architecture
 
 **Agent instrumentation pattern** (same in both `agent_instrumented.py` and `rag_agent.py`):

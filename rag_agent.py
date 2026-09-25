@@ -29,6 +29,7 @@ from langchain.agents import create_agent
 
 from deepeval.integrations.langchain import CallbackHandler
 from deepeval.tracing.context import update_current_trace
+from llm_models import LLMModel
 
 
 # ---------------------------------------------------------------------------
@@ -77,7 +78,7 @@ POLICY_DOCS = [
 # ---------------------------------------------------------------------------
 # Build the vector store once at import time.
 # ---------------------------------------------------------------------------
-embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+embeddings = OpenAIEmbeddings(model=LLMModel.TEXT_EMBEDDING_3_SMALL)
 vector_store = InMemoryVectorStore(embedding=embeddings)
 vector_store.add_texts(POLICY_DOCS)
 
@@ -103,7 +104,7 @@ def search_policies(query: str) -> str:
 # ---------------------------------------------------------------------------
 # Agent
 # ---------------------------------------------------------------------------
-llm = ChatAnthropic(model="claude-sonnet-4-6", temperature=0)
+llm = ChatAnthropic(model=LLMModel.CLAUDE_SONNET_4_6, temperature=0)
 
 agent = create_agent(
     model=llm,

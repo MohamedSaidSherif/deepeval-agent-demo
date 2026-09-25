@@ -7,6 +7,7 @@ from deepeval.metrics import GEval, ConversationalGEval
 from deepeval.test_case import Turn, ConversationalTestCase, MultiTurnParams
 
 from chatbot import chat
+from llm_models import LLMModel
 
 turns = []
 history = []
@@ -27,7 +28,7 @@ correctness = ConversationalGEval(
          "Did the chatbot fully resolve the customer's issue? "
       "It should use tools when needed and provide accurate answers."
     ),
-    model="gpt-4o",
+    model=LLMModel.GPT_4O,
     threshold=0.80,
     evaluation_params=[
         MultiTurnParams.ROLE,

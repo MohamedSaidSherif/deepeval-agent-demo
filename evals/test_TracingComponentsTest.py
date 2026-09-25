@@ -9,6 +9,7 @@ from deepeval.test_case import ToolCall
 from deepeval.tracing import observe, update_current_trace
 
 from agent_instrumented import support_agent as _support_agent
+from llm_models import LLMModel
 
 #Trace have expected values and actual values
 @observe(name="support_agent")
@@ -25,7 +26,7 @@ def support_agent(user_input: str) -> str:
 
 
 
-task_completion = TaskCompletionMetric(threshold=0.7, model="qwen2.5-coder:latest")
+task_completion = TaskCompletionMetric(threshold=0.7, model=LLMModel.QWEN_2_5_CODER)
 
 tool_correctness = ToolCorrectnessMetric()
 

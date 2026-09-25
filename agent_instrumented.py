@@ -37,6 +37,7 @@ from langchain.agents import create_agent
 # --- (1) NEW: import DeepEval tracing primitives --------------------------
 from deepeval.integrations.langchain import CallbackHandler
 from deepeval.tracing.context import update_current_trace
+from llm_models import LLMModel
 
 
 # ---------------------------------------------------------------------------
@@ -79,8 +80,8 @@ def get_refund_policy(category: str) -> str:
 # ---------------------------------------------------------------------------
 # Same agent as agent_plain.py.
 # ---------------------------------------------------------------------------
-# llm = ChatAnthropic(model="claude-sonnet-4-6", temperature=0)
-llm = ChatOllama(model="gpt-oss", temperature=0)
+# llm = ChatAnthropic(model=LLMModel.CLAUDE_SONNET_4_6, temperature=0)
+llm = ChatOllama(model=LLMModel.GPT_OSS, temperature=0)
 
 # Load one extra tool from the MCP server at startup and merge it in.
 _mcp_tools = asyncio.run(
