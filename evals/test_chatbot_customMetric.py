@@ -19,6 +19,7 @@ for user_msg in [
         "Can I upgrade to express shipping?",
     ]:
        reply,history, _  = chat(user_msg,history)
+       print(f"User: {user_msg}\nAssistant: {reply}\n")
        turns.append(Turn(role="user",content=user_msg))
        turns.append(Turn(role="assistant",content=reply))
 
@@ -28,7 +29,7 @@ correctness = ConversationalGEval(
          "Did the chatbot fully resolve the customer's issue? "
       "It should use tools when needed and provide accurate answers."
     ),
-    model=LLMModel.GPT_4O,
+    model=LLMModel.GPT_OSS,
     threshold=0.80,
     evaluation_params=[
         MultiTurnParams.ROLE,

@@ -150,7 +150,7 @@ def chat(
 
     while True:
         response = client.chat.completions.create(
-            model=LLMModel.GPT_4O,
+            model=LLMModel.GPT_OSS,
             messages=[{"role": "system", "content": SYSTEM_PROMPT}] + history,
             tools=TOOLS,
             tool_choice="auto",

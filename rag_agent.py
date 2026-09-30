@@ -24,6 +24,7 @@ load_dotenv()
 from langchain_core.tools import tool
 from langchain_core.vectorstores import InMemoryVectorStore
 from langchain_anthropic import ChatAnthropic
+from langchain_ollama import ChatOllama, OllamaEmbeddings
 from langchain_openai import OpenAIEmbeddings
 from langchain.agents import create_agent
 
@@ -78,7 +79,8 @@ POLICY_DOCS = [
 # ---------------------------------------------------------------------------
 # Build the vector store once at import time.
 # ---------------------------------------------------------------------------
-embeddings = OpenAIEmbeddings(model=LLMModel.TEXT_EMBEDDING_3_SMALL)
+# embeddings = OpenAIEmbeddings(model=LLMModel.TEXT_EMBEDDING_3_SMALL)
+embeddings = OllamaEmbeddings(model=LLMModel.OLLAMA_EMBEDDING_NOMIC_EMBED_TEXT)
 vector_store = InMemoryVectorStore(embedding=embeddings)
 vector_store.add_texts(POLICY_DOCS)
 
@@ -104,7 +106,8 @@ def search_policies(query: str) -> str:
 # ---------------------------------------------------------------------------
 # Agent
 # ---------------------------------------------------------------------------
-llm = ChatAnthropic(model=LLMModel.CLAUDE_SONNET_4_6, temperature=0)
+# llm = ChatAnthropic(model=LLMModel.CLAUDE_SONNET_4_6, temperature=0)
+llm = ChatOllama(model=LLMModel.GPT_OSS, temperature=0)
 
 agent = create_agent(
     model=llm,

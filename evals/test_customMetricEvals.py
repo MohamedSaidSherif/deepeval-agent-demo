@@ -28,8 +28,8 @@ correctness = GEval(
         "as the expected output. Minor wording differences are acceptable; "
         "missing or wrong facts are not."
     ),
-    model=LLMModel.GPT_4O,
-    threshold=0.79,
+    model=LLMModel.GPT_OSS,
+    threshold=0.80,
     evaluation_params=[
         SingleTurnParams.INPUT,
         SingleTurnParams.EXPECTED_OUTPUT,
@@ -38,7 +38,7 @@ correctness = GEval(
 
 dataset = EvaluationDataset(goldens = [
     Golden(input = "Where is my order ORD-1042?",
-           expected_output= "order ORD-1042 is shipped and will arrive by May 13th")
+           expected_output= "order ORD-1042 is shipped and will arrive by May 13th 2026")
 ])
 
 for golden in dataset.evals_iterator(metrics=[correctness]):

@@ -45,25 +45,25 @@ dataset = EvaluationDataset(goldens = [
 
 precisionMetric = ContextualPrecisionMetric(
     threshold=0.7,
-    model = LLMModel.GPT_4O
+    model = LLMModel.GPT_OSS
 
 )
 recallMetric = ContextualRecallMetric(
     threshold=0.7,
-    model=LLMModel.GPT_4O,
+    model=LLMModel.GPT_OSS,
     include_reason=True
 )
 
 relevancyMetric = AnswerRelevancyMetric(
     threshold=0.7,
-    model=LLMModel.GPT_4O,
+    model=LLMModel.GPT_OSS,
     include_reason=True
 )
 
 
 faithfulMetric = FaithfulnessMetric(
     threshold=0.7,
-    model=LLMModel.GPT_4O,
+    model=LLMModel.GPT_OSS,
     include_reason=True
 )
 

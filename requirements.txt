@@ -8,3 +8,4 @@ langchain-core
 openai
 python-dotenv
 langchain-mcp-adapters
+numpy

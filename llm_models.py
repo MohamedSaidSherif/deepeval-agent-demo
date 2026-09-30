@@ -13,3 +13,8 @@ class LLMModel(StrEnum):
     # Ollama (local)
     GPT_OSS = "gpt-oss"
     QWEN_2_5_CODER = "qwen2.5-coder:latest"
+    LLAMA_3_2 = "llama3.2"
+
+
+    # Ollama Embeddings (local)
+    OLLAMA_EMBEDDING_NOMIC_EMBED_TEXT = "nomic-embed-text"
