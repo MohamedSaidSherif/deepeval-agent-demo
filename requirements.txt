@@ -1,5 +1,10 @@
 deepeval
+chromadb
+click>=8.0.0,<8.4.0
+huggingface-hub>=0.16.4,<1.0
 langchain
+langchain-community
+langchain-text-splitters
 langchain-openai
 langchain-anthropic
 langchain-ollama

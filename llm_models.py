@@ -17,4 +17,4 @@ class LLMModel(StrEnum):
 
 
     # Ollama Embeddings (local)
-    OLLAMA_EMBEDDING_NOMIC_EMBED_TEXT = "nomic-embed-text"
+    NOMIC_EMBED_TEXT = "nomic-embed-text"

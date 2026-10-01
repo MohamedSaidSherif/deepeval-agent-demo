@@ -80,7 +80,7 @@ POLICY_DOCS = [
 # Build the vector store once at import time.
 # ---------------------------------------------------------------------------
 # embeddings = OpenAIEmbeddings(model=LLMModel.TEXT_EMBEDDING_3_SMALL)
-embeddings = OllamaEmbeddings(model=LLMModel.OLLAMA_EMBEDDING_NOMIC_EMBED_TEXT)
+embeddings = OllamaEmbeddings(model=LLMModel.NOMIC_EMBED_TEXT)
 vector_store = InMemoryVectorStore(embedding=embeddings)
 vector_store.add_texts(POLICY_DOCS)
 
