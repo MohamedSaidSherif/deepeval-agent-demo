@@ -1,7 +1,11 @@
 #Assertion - Judge LLM (Expected output) -> Actual output
 import sys, os
 
-sys.path.insert( 0, os.path.dirname( os.path.dirname( os.path.abspath( __file__ ) ) ) )
+sys.path.insert( 0, os.path.dirname( os.path.dirname( os.path.dirname( os.path.abspath( __file__ ) ) ) ) )
+
+os.environ.setdefault("DEEPEVAL_PER_TASK_TIMEOUT_SECONDS_OVERRIDE", "900")
+os.environ.setdefault("DEEPEVAL_PER_ATTEMPT_TIMEOUT_SECONDS_OVERRIDE", "300")
+
 from deepeval.contextvars import get_current_golden
 from deepeval.dataset import EvaluationDataset, Golden
 from deepeval.metrics import GEval

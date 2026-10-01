@@ -6,7 +6,11 @@
 import os
 import sys
 
-sys.path.insert( 0, os.path.dirname( os.path.dirname( os.path.abspath( __file__ ) ) ) )
+sys.path.insert( 0, os.path.dirname( os.path.dirname( os.path.dirname( os.path.abspath( __file__ ) ) ) ) )
+
+os.environ.setdefault("DEEPEVAL_PER_TASK_TIMEOUT_SECONDS_OVERRIDE", "900")
+os.environ.setdefault("DEEPEVAL_PER_ATTEMPT_TIMEOUT_SECONDS_OVERRIDE", "300")
+
 from deepeval.contextvars import get_current_golden
 from deepeval.dataset import Golden
 from deepeval.dataset import Golden, EvaluationDataset
@@ -46,30 +50,19 @@ dataset = EvaluationDataset(goldens = [
 precisionMetric = ContextualPrecisionMetric(
     threshold=0.7,
     model = LLMModel.GPT_OSS
-
 )
 recallMetric = ContextualRecallMetric(
     threshold=0.7,
     model=LLMModel.GPT_OSS,
-    include_reason=True
 )
-
 relevancyMetric = AnswerRelevancyMetric(
     threshold=0.7,
     model=LLMModel.GPT_OSS,
-    include_reason=True
 )
-
-
 faithfulMetric = FaithfulnessMetric(
     threshold=0.7,
     model=LLMModel.GPT_OSS,
-    include_reason=True
 )
-
-
-
-
 
 for golden in dataset.evals_iterator(metrics=[precisionMetric,recallMetric,relevancyMetric,faithfulMetric]):
     rag_support_agent(golden.input)

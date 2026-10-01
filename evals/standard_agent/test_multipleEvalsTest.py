@@ -1,6 +1,6 @@
 import os
 import sys
-sys.path.insert( 0, os.path.dirname( os.path.dirname( os.path.abspath( __file__ ) ) ) )
+sys.path.insert( 0, os.path.dirname( os.path.dirname( os.path.dirname( os.path.abspath( __file__ ) ) ) ) )
 
 # Local Ollama judge (gpt-oss) is slow; DeepEval's default 180s per-metric budget is too short.
 # Must be set before deepeval is imported.
