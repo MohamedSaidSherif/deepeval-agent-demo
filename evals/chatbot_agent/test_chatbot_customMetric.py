@@ -1,9 +1,9 @@
+from dotenv import load_dotenv
+load_dotenv()  # loads .env (incl. DeepEval timeout overrides) before deepeval import
+
 import sys, os
 
 sys.path.insert( 0, os.path.dirname( os.path.dirname( os.path.dirname( os.path.abspath( __file__ ) ) ) ) )
-
-os.environ.setdefault("DEEPEVAL_PER_TASK_TIMEOUT_SECONDS_OVERRIDE", "900")
-os.environ.setdefault("DEEPEVAL_PER_ATTEMPT_TIMEOUT_SECONDS_OVERRIDE", "300")
 
 from deepeval.evaluate import evaluate
 from deepeval.metrics import GEval, ConversationalGEval

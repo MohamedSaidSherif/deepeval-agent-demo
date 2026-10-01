@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+load_dotenv()  # loads .env (incl. DeepEval timeout overrides) before deepeval import
+
 import os
 import sys
 

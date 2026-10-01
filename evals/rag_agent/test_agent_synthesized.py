@@ -1,9 +1,9 @@
+from dotenv import load_dotenv
+load_dotenv()  # loads .env (incl. DeepEval timeout overrides) before deepeval import
+
 import sys
 import os
 sys.path.insert( 0, os.path.dirname( os.path.dirname( os.path.dirname( os.path.abspath( __file__ ) ) ) ) )
-
-os.environ.setdefault("DEEPEVAL_PER_TASK_TIMEOUT_SECONDS_OVERRIDE", "900")
-os.environ.setdefault("DEEPEVAL_PER_ATTEMPT_TIMEOUT_SECONDS_OVERRIDE", "300")
 
 
 from deepeval.dataset import EvaluationDataset
@@ -38,7 +38,7 @@ local_judge = OllamaModel(model=LLMModel.GPT_OSS)
 synthesizer = Synthesizer(model=local_judge)
 
 goldens = synthesizer.generate_goldens_from_docs(
-    document_paths=[os.path.join(os.path.dirname(os.path.dirname( os.path.abspath( __file__ ) ) ),"policies.txt")],
+    document_paths=[os.path.join(os.path.dirname(os.path.dirname(os.path.dirname( os.path.abspath( __file__ ) ) )),"policies.txt")],
     include_expected_output=True,
     max_goldens_per_context=2,
     context_construction_config=ContextConstructionConfig(
