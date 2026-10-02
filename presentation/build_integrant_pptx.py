@@ -234,16 +234,16 @@ def set_runs(paragraph, runs, base_size, base_color, font=BODY_FONT):
             f.color.rgb = base_color
 
 
-def add_branding(slide, page_no, top_rule=False):
+def add_branding(slide, page_no, top_rule=True):
     shapes = slide.shapes
     # bottom rule
     ln = shapes.add_connector(2, Inches(0.78), BOT_RULE_Y, Inches(12.51), BOT_RULE_Y)
     ln.line.color.rgb = RULE_CLR
     ln.line.width = Pt(1)
-    if top_rule:
-        ln2 = shapes.add_connector(2, Inches(0.78), TOP_RULE_Y, Inches(12.51), TOP_RULE_Y)
-        ln2.line.color.rgb = RULE_CLR
-        ln2.line.width = Pt(1)
+    # top rule below the title — part of the integrant DNA on every slide
+    ln2 = shapes.add_connector(2, Inches(0.78), TOP_RULE_Y, Inches(12.51), TOP_RULE_Y)
+    ln2.line.color.rgb = RULE_CLR
+    ln2.line.width = Pt(1)
     # orange corner square
     sq = shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(12.10), Inches(6.84),
                           Inches(0.41), Inches(0.41))
@@ -321,6 +321,68 @@ def build_lead(slide, blocks):
         para(h3, 20, GRAY, bold=False)
     for pr in paras:
         para(pr, 16, GRAY, bold=False, font=BODY_FONT)
+
+
+def build_agenda(slide, blocks):
+    """Replicate the integrant 'AGENDA' design from template slide 6:
+    big AGENDA title, cyan numbered circles, Roboto item text beside each."""
+    # title
+    tb, tf = add_textbox(slide, Inches(0.84), Inches(0.50), Inches(4.2), Inches(0.80))
+    tf.anchor = MSO_ANCHOR.MIDDLE
+    p = tf.paragraphs[0]
+    run = p.add_run()
+    run.text = "AGENDA"
+    run.font.size = Pt(40)
+    run.font.name = TITLE_FONT
+    run.font.color.rgb = CYAN
+
+    # gather ordered items
+    items = []
+    for b in blocks:
+        if b["type"] == "list":
+            items.extend(b["items"])
+    tops = [1.66, 2.31, 2.94, 3.57, 4.20, 4.83, 5.46, 6.09]
+    n = len(items)
+    if n > len(tops):
+        # compress spacing to fit
+        tops = [1.66 + i * (4.43 / max(1, n - 1)) for i in range(n)]
+    for i, it in enumerate(items):
+        y = tops[i] if i < len(tops) else 1.66 + i * 0.63
+        # cyan numbered circle
+        oval = slide.shapes.add_shape(MSO_SHAPE.OVAL, Inches(0.84), Inches(y),
+                                      Inches(0.47), Inches(0.47))
+        oval.fill.solid()
+        oval.fill.fore_color.rgb = CYAN
+        oval.line.fill.background()
+        oval.shadow.inherit = False
+        otf = oval.text_frame
+        otf.margin_left = 0; otf.margin_right = 0
+        otf.margin_top = 0; otf.margin_bottom = 0
+        op = otf.paragraphs[0]
+        op.alignment = PP_ALIGN.CENTER
+        orun = op.add_run()
+        orun.text = str(i + 1)
+        orun.font.size = Pt(16)
+        orun.font.bold = True
+        orun.font.name = BODY_FONT
+        orun.font.color.rgb = WHITE
+        # item text
+        tb2, tf2 = add_textbox(slide, Inches(1.36), Inches(y + 0.02),
+                               Inches(11.14), Inches(0.44))
+        tf2.anchor = MSO_ANCHOR.MIDDLE
+        pp = tf2.paragraphs[0]
+        for r in inline_runs(it["text"]):
+            rr = pp.add_run()
+            rr.text = r["text"]
+            rr.font.size = Pt(17)
+            rr.font.name = CODE_FONT if r.get("code") else BODY_FONT
+            if r.get("code"):
+                rr.font.color.rgb = CYAN_DK
+            elif r.get("bold"):
+                rr.font.bold = True
+                rr.font.color.rgb = TEXT
+            else:
+                rr.font.color.rgb = GRAY_DK
 
 
 def build_content(slide, blocks):
@@ -565,9 +627,13 @@ def main():
             continue
         page += 1
         slide = prs.slides.add_slide(blank)
-        add_branding(slide, page, top_rule=lead)
+        title_block = next((b for b in blocks if b["type"] == "heading"), None)
+        is_agenda = bool(title_block) and title_block["text"].strip().lower() == "agenda"
+        add_branding(slide, page, top_rule=(lead or is_agenda))
         if lead:
             build_lead(slide, blocks)
+        elif is_agenda:
+            build_agenda(slide, blocks)
         else:
             build_content(slide, blocks)
         if notes:

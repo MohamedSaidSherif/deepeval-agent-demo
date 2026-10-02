@@ -117,5 +117,6 @@ python test_safety.py                 # Bias + Toxicity + PIILeakage
 
 ## Known issues / patches
 
-- **DeepEval 4.0.4 `_make_hashable` bug**: `ToolMessage` objects in `tools_called` are unhashable, crashing `ToolCorrectnessMetric`. Patched directly in `.venv/lib/python3.12/site-packages/deepeval/test_case/llm_test_case.py` — the `else` branch now wraps `hash(obj)` in a try/except and falls back to `str(obj)`.
+- **DeepEval `_make_hashable` bug (fixed upstream in 4.2.7)**: `ToolMessage` objects in `tools_called` were unhashable, crashing `ToolCorrectnessMetric`. Previously patched by hand in `.venv/.../deepeval/test_case/llm_test_case.py`. As of 4.2.7 the `else` branch wraps `hash(obj)` in a try/except natively, so the manual patch is no longer needed.
+- **`ToolCorrectnessMetric` crashes when the agent calls no tools**: the trace-level metric requires a non-None `tools_called`, but DeepEval's LangChain `CallbackHandler` only initializes `trace.tools_called` inside `on_tool_end` — so when the agent calls zero tools (e.g. it asks a clarifying question), `tools_called` stays `None` and the metric raises `MissingTestCaseParamsError`. Still unfixed as of 4.2.7. Worked around in `agent_instrumented.py`: we extract the tools actually called from the result messages and set `trace.tools_called` directly (an empty list when none were called).
 - **`create_react_agent` deprecation**: migrated to `from langchain.agents import create_agent` with `system_prompt=` replacing `prompt=`. Requires the `langchain` base package (added to `requirements.txt`).
