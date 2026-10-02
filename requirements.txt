@@ -1,4 +1,4 @@
-deepeval
+deepeval==4.2.7
 chromadb
 click>=8.0.0,<8.4.0
 huggingface-hub>=0.16.4,<1.0
