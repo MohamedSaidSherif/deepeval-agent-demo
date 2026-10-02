@@ -13,11 +13,11 @@ from deepeval.test_case import LLMTestCase
 from agent_instrumented import support_agent
 from llm_models import LLMModel
 
-user_question = "Where is my order ORD-1042?"
-actual_output = support_agent(user_question)
+user_input = "Where is my order ORD-1042?"
+actual_output = support_agent(user_input)
 
 test_case = LLMTestCase(
-    input = user_question,
+    input = user_input,
     actual_output = actual_output
 )
 

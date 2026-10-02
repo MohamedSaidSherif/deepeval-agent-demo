@@ -47,10 +47,14 @@ dataset = EvaluationDataset(goldens = [
         ),
     ),])
 
+# retrieved docs = 10  -> 80% answer was in the 9 doc
 precisionMetric = ContextualPrecisionMetric(
     threshold=0.7,
     model = LLMModel.GPT_OSS
 )
+
+# retrieved docs = 10  -> answer was only in the two docs -> 20% answer was noise
+# retrieved docs = 10  -> answer was only in the 7 docs -> 30% answer was noise
 recallMetric = ContextualRecallMetric(
     threshold=0.7,
     model=LLMModel.GPT_OSS,
