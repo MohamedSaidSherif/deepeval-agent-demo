@@ -19,7 +19,7 @@ def support_agent(user_input: str) -> str:
     return _support_agent( user_input )
 
 answer_relevancy = AnswerRelevancyMetric(threshold = 0.7, model = LLMModel.GPT_OSS)
-step_efficiency = StepEfficiencyMetric(threshold=0.5, model = LLMModel.GPT_OSS)
+step_efficiency = StepEfficiencyMetric(threshold=0.5, model = LLMModel.QWEN_2_5_CODER)
 
 prompt_alignment = PromptAlignmentMetric(
     prompt_instructions=[
